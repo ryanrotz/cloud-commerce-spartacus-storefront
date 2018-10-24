@@ -7,7 +7,7 @@ import { LoginPageComponent } from './login-page.component';
 
 const routes: Routes = [
   {
-    path: 'login',
+    path: '__cx-config__login', // todo spike old: 'login',
     canActivate: [NotAuthGuard, CmsPageGuards],
     data: { pageLabel: 'login' },
     component: LoginPageComponent

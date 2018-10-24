@@ -7,7 +7,7 @@ import { ResetNewPasswordComponent } from './reset-new-password-page.component';
 
 const routes: Routes = [
   {
-    path: 'reset-new-password/:token',
+    path: '__cx-config__resetNewPassword', // todo spike old: 'reset-new-password/:token',
     canActivate: [NotAuthGuard, CmsPageGuards],
     data: { pageLabel: 'homepage' },
     component: ResetNewPasswordComponent

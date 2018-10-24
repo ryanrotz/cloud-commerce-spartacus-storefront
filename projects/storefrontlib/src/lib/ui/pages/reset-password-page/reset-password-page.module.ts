@@ -9,7 +9,7 @@ import { ResetPasswordPageLayoutModule } from '../../layout/reset-password-page-
 
 const routes: Routes = [
   {
-    path: 'reset-password',
+    path: '__cx-config__resetPassword', // todo spike old: 'reset-password',
     canActivate: [NotAuthGuard, CmsPageGuards],
     data: { pageLabel: 'login' },
     component: ResetPasswordPageComponent

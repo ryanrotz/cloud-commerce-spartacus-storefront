@@ -7,7 +7,7 @@ import { StoreFinderPageLayoutModule } from '../../layout/store-finder-page-layo
 
 const routes: Routes = [
   {
-    path: 'store-finder',
+    path: '__cx-config__storeFinder', // todo spike old: 'store-finder',
     canActivate: [CmsPageGuards],
     data: { pageLabel: 'storefinderPage' },
     component: StoreFinderPageComponent

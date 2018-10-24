@@ -10,7 +10,7 @@ import { OrderConfirmationPageGuard } from '../../../checkout/guards/order-confi
 
 const routes: Routes = [
   {
-    path: 'orderConfirmation',
+    path: '__cx-config__orderConfirmation', // todo spike old: 'orderConfirmation',
     canActivate: [AuthGuard, CmsPageGuards, OrderConfirmationPageGuard],
     data: { pageLabel: 'orderConfirmationPage' },
     component: OrderConfirmationPageComponent

@@ -8,7 +8,7 @@ import { HomePageComponent } from './home-page.component';
 
 const routes: Routes = [
   {
-    path: '',
+    path: '__cx-config__homepage', // todo spike old: '',
     canActivate: [CmsPageGuards],
     component: HomePageComponent,
     data: { pageLabel: 'homepage' }

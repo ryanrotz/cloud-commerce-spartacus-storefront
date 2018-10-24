@@ -9,7 +9,7 @@ import { OrderHistoryPageComponent } from './order-history-page.component';
 
 const routes: Routes = [
   {
-    path: 'my-account/orders',
+    path: '__cx-config__myAccount_orders', // todo spike old: 'my-account/orders',
     canActivate: [AuthGuard, CmsPageGuards],
     component: OrderHistoryPageComponent,
     data: { pageLabel: 'orders' }

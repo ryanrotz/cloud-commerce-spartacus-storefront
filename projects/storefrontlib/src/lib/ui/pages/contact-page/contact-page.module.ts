@@ -8,7 +8,7 @@ import { ContactPageComponent } from './contact-page.component';
 
 const routes: Routes = [
   {
-    path: 'contact',
+    path: '__cx-config__contact', // todo spike old: 'contact',
     canActivate: [CmsPageGuards],
 
     // TODO:

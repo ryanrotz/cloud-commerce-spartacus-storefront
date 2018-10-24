@@ -7,7 +7,7 @@ import { PageNotFoundComponent } from './404.component';
 
 const routes: Routes = [
   {
-    path: '**',
+    path: '__cx-config__pageNotFound', // todo spike old: '**',
     component: PageNotFoundComponent,
     canActivate: [CmsPageGuards],
     data: { pageLabel: 'notFound' }

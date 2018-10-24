@@ -10,7 +10,7 @@ import { CategoryPageComponent } from './category-page.component';
 
 const routes: Routes = [
   {
-    path: 'search/:query',
+    path: '__cx-config__search', // todo spike old: 'search/:query',
     canActivate: [CmsPageGuards],
     component: CategoryPageComponent,
     data: { pageLabel: 'search' }
@@ -19,35 +19,36 @@ const routes: Routes = [
   // redirect OLD links
   {
     path: 'Open-Catalogue/:categoryTitle/c/:categoryCode',
-    redirectTo: '/category/:categoryCode/:categoryTitle'
+    redirectTo: '__cx-config__category' // todo spike old: '/category/:categoryCode/:categoryTitle'
   },
   {
     path: 'Open-Catalogue/:category1/:categoryTitle/c/:categoryCode',
-    redirectTo: '/category/:categoryCode/:categoryTitle'
+    redirectTo: '__cx-config__category' // todo spike old:'/category/:categoryCode/:categoryTitle'
   },
   {
     path: 'Open-Catalogue/:category1/:category2/:categoryTitle/c/:categoryCode',
-    redirectTo: '/category/:categoryCode/:categoryTitle'
+    redirectTo: '__cx-config__category' // todo spike old:'/category/:categoryCode/:categoryTitle'
   },
   {
     path: 'OpenCatalogue/:category1/:category2/:categoryTitle/c/:categoryCode',
-    redirectTo: '/category/:categoryCode/:categoryTitle'
+    redirectTo: '__cx-config__category' // todo spike old:'/category/:categoryCode/:categoryTitle'
   },
   {
-    path: 'category/:categoryCode',
-    canActivate: [CmsPageGuards],
-    component: CategoryPageComponent
-  },
-  {
-    path: 'category/:categoryCode/:title',
-    canActivate: [CmsPageGuards],
-    component: CategoryPageComponent
-  },
-  {
-    path: 'Brands/:brandName/c/:brandCode',
+    path: '__cx-config__category', // todo spike old 'category/:categoryCode',
     canActivate: [CmsPageGuards],
     component: CategoryPageComponent
   }
+  // spike todo old:
+  // {
+  //   path: 'category/:categoryCode/:title',
+  //   canActivate: [CmsPageGuards],
+  //   component: CategoryPageComponent
+  // },
+  // {
+  //   path: 'Brands/:brandName/c/:brandCode',
+  //   canActivate: [CmsPageGuards],
+  //   component: CategoryPageComponent
+  // }
 ];
 
 @NgModule({
