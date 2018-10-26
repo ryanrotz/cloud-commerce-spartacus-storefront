@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { AuthModuleConfig } from 'projects/storefrontlib/src/lib/auth/auth-module.config';
+import { ServerConfig } from '../config/server-config/server-config';
 
 type Segment = string;
 type Path = string;
@@ -14,8 +14,8 @@ interface PathWithMatchingParameters {
   name: 'cxPath'
 })
 export class PathPipe implements PipeTransform {
-  // TODO use some other config than AuthModuleCOnfig
-  constructor(private config: AuthModuleConfig) {}
+  // TODO use some other config than ServerConfig
+  constructor(private config: ServerConfig) {}
 
   transform([pageName, parametersObject]: [string, object]): Segment[] {
     const pathCandidates = this.config.routePaths[pageName];

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, Routes, Route } from '@angular/router';
-import { AuthModuleConfig } from '../../../auth/auth-module.config';
+import { ServerConfig } from '@spartacus/core';
 
 @Component({
   selector: 'cx-storefront',
@@ -8,9 +8,9 @@ import { AuthModuleConfig } from '../../../auth/auth-module.config';
   styleUrls: ['./storefront.component.scss']
 })
 export class StorefrontComponent implements OnInit {
-  // TODO spike - define other config not to use AuthModuleConfig
+  // TODO spike - define other config not to use ServerConfig
   // TODO spike - move all logic of replacing routes to other place than here
-  constructor(private config: AuthModuleConfig, private router: Router) {}
+  constructor(private config: ServerConfig, private router: Router) {}
 
   // convention: '__cx-config__<PAGE_KEY>' path will be mapped to a path configured under <PAGE_KEY>
   readonly configPathPrefix = '__cx-config__';

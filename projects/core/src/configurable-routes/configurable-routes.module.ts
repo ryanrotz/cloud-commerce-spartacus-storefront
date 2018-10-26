@@ -4,8 +4,7 @@ import { PathPipe } from './path.pipe';
 
 @NgModule({
   imports: [CommonModule],
-  declarations: []
+  declarations: [PathPipe],
+  exports: [PathPipe]
 })
-export class ConfigurableRoutes {
-  declarations: [PathPipe];
-}
+export class ConfigurableRoutesModule {}
