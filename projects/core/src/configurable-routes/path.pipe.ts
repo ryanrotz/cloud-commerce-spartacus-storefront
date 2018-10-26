@@ -17,6 +17,7 @@ export class PathPipe implements PipeTransform {
   // TODO use some other config than ServerConfig
   constructor(private config: ServerConfig) {}
 
+  // always returns an absolute path (with leading /)
   transform([pageName, parametersObject]: [string, object]): Segment[] {
     const pathCandidates = this.config.routePaths[pageName];
 
@@ -49,7 +50,8 @@ export class PathPipe implements PipeTransform {
       }
     }
 
-    return this.injectParametersValues(path, parametersObject);
+    const absolutePath = this.ensureLeadingSlash(path);
+    return this.injectParametersValues(absolutePath, parametersObject);
   }
 
   private injectParametersValues(path: Path, parametersObject: object) {
@@ -59,6 +61,10 @@ export class PathPipe implements PipeTransform {
           ? parametersObject[this.getParameterName(segment)]
           : segment
     );
+  }
+
+  private ensureLeadingSlash(path: Path): Path {
+    return (path = path.startsWith('/') ? path : '/' + path);
   }
 
   // returns first path with most matching parameters and list of matching parameters
@@ -100,7 +106,9 @@ export class PathPipe implements PipeTransform {
     givenParameters: Parameter[]
   ): PathWithMatchingParameters {
     const pathParameters = this.getParameters(path);
-    const matchingParameters = this.match(pathParameters, givenParameters);
+    const matchingParameters = pathParameters.filter(
+      parameter => givenParameters.indexOf(parameter) !== -1
+    );
     return {
       path,
       matchingParameters,
@@ -113,17 +121,6 @@ export class PathPipe implements PipeTransform {
     return this.getSegments(path)
       .filter(this.isParameter)
       .map(this.getParameterName);
-  }
-
-  private match(
-    testedList: Parameter[],
-    matchingList: Parameter[]
-  ): Parameter[] {
-    return testedList.filter(testedEl => this.isIn(testedEl, matchingList));
-  }
-
-  private isIn<T>(element: T, list: T[]): boolean {
-    return list.indexOf(element) !== -1;
   }
 
   private getSegments(path: Path): Segment[] {
