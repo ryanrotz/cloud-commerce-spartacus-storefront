@@ -57,10 +57,10 @@ export class StorefrontComponent implements OnInit {
   }
 
   private getConfiguredPaths(originalPath: string): string[] {
-    const configKey = originalPath.replace(this.configPathPrefix, '');
-    const configuredPaths = this.config.routePaths[configKey];
+    const pageName = originalPath.replace(this.configPathPrefix, '');
+    const configuredPaths = this.config.routePaths[pageName];
     if (configuredPaths === undefined && !this.config.production) {
-      console.warn(`No paths were configured for '${originalPath}'!`);
+      console.warn(`No paths were configured for page '${pageName}'!`);
     }
     return configuredPaths;
   }
