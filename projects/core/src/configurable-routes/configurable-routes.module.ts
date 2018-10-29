@@ -3,7 +3,7 @@ import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { ConfigurableRoutesService } from './configurable-routes.service';
 import { ConfigurableRoutesLoader } from './configurable-routes-loader';
 
-function fetchRoutesConfig(loader: ConfigurableRoutesLoader) {
+function loadRoutesConfig(loader: ConfigurableRoutesLoader) {
   return () => loader.loadRoutesConfig();
 }
 
@@ -16,7 +16,7 @@ function fetchRoutesConfig(loader: ConfigurableRoutesLoader) {
     ConfigurableRoutesLoader,
     {
       provide: APP_INITIALIZER,
-      useFactory: fetchRoutesConfig,
+      useFactory: loadRoutesConfig,
       deps: [ConfigurableRoutesLoader],
       multi: true
     }
