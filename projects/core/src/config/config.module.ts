@@ -52,7 +52,7 @@ export class ConfigModule {
     return {
       ngModule: ConfigModule,
       providers: [
-        { provide: ServerConfig, useExisting: Config }, // spike new
+        { provide: ServerConfig, useExisting: Config }, // spike new todo remove
 
         provideConfig(defaultServerConfig),
         provideConfig(config),

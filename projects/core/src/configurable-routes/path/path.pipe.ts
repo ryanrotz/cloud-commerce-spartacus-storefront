@@ -1,5 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { ServerConfig } from '../config/server-config/server-config';
+import { ServerConfig } from '../../config/server-config/server-config';
+import { ConfigurableRoutesService } from '../configurable-routes.service';
 
 type Segment = string;
 type Path = string;
@@ -9,18 +10,16 @@ type Parameter = string;
   name: 'cxPath'
 })
 export class PathPipe implements PipeTransform {
-  // TODO use some other config than ServerConfig
-  constructor(private config: ServerConfig) {}
+  constructor(
+    private configurableRoutesService: ConfigurableRoutesService,
+    private config: ServerConfig
+  ) {}
 
   // always returns an absolute path (with leading /)
   transform([pageName, parametersObject]: [string, object]): Segment[] {
-    const paths = this.config.routePaths[pageName];
+    const paths = this.configurableRoutesService.getPathsForPage(pageName);
 
     if (paths === undefined) {
-      if (!this.config.production) {
-        // TODO check if it really calls console.warn when pageName does not exist as a key in the config
-        console.warn(`No paths were configured for page '${pageName}'!`);
-      }
       return ['/']; // main route
     }
 
@@ -43,10 +42,10 @@ export class PathPipe implements PipeTransform {
     }
 
     const absolutePath = this.ensureLeadingSlash(path); // TODO: rethink if always return absulte path - for configurable child routes
-    return this.injectParameterValues(absolutePath, parametersObject);
+    return this.replaceParameters(absolutePath, parametersObject);
   }
 
-  private injectParameterValues(path: Path, parametersObject: object) {
+  private replaceParameters(path: Path, parametersObject: object) {
     return this.getSegments(path).map(
       segment =>
         this.isParameter(segment)
@@ -81,7 +80,7 @@ export class PathPipe implements PipeTransform {
   }
 
   private getParameterName(segment: Segment): Parameter {
-    return segment.slice(1); // remove leading ':'
+    return segment.slice(1); // it just removes leading ':'
   }
 
   private ensureLeadingSlash(path: Path): Path {
