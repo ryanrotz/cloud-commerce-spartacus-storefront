@@ -1,0 +1,26 @@
+@mixin cx-breakpoint-up($name, $breakpoints: $default-breakpoints) {
+  $min: cx-breakpoint-min($name, $breakpoints);
+  @if $min {
+    @media (min-width: $min) {
+      @content;
+    }
+  } @else {
+    @content;
+  }
+}
+
+@function cx-breakpoint-min($name, $breakpoints: $default-breakpoints) {
+  $min: map-get($breakpoints, $name);
+  @return if($min != 0, $min, null);
+}
+
+@mixin horizontal-layout($components-per-row) {
+  display: flex;
+  flex-wrap: wrap;
+  & > * {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: unquote((100 / $components-per-row) + '%');
+    max-width: unquote((100 / $components-per-row) + '%');
+  }
+}

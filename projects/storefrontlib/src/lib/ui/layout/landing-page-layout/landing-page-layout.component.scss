@@ -2,24 +2,24 @@
 @import 'functions';
 @import 'mixins';
 
-.y-landing-page-layout {
-  &__container {
-    display: flex;
-    flex-direction: column;
-    @include media-breakpoint-up(sm) {
-      flex-direction: row;
-      align-content: stretch;
-      justify-content: flex-start;
-      align-items: flex-start;
-    }
-    @include media-breakpoint-up(md) {
-      align-content: flex-start;
-    }
+.y-landing-page-layout__container {
+  @include horizontal-layout(1);
+  @include cx-breakpoint-up(md) {
+    @include horizontal-layout(2);
   }
+}
+// .y-landing-page-layout__slot-2 {
+//   @include horizontal-layout(1);
+//   @include cx-breakpoint-up(sm) {
+//     @include horizontal-layout(2);
+//   }
+// }
+
+.y-landing-page-layout {
   &__slot-2 {
     display: flex;
     flex-direction: column;
-    @include media-breakpoint-down(md) {
+    @include media-breakpoint-down(sm) {
       flex: 1 1 0%;
     }
     @include media-breakpoint-up(lg) {
