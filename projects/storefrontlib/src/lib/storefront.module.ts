@@ -16,6 +16,7 @@ import { StorefrontModuleConfig } from './storefront-config';
 
 @NgModule({
   imports: [
+    ConfigurableRoutesModule,
     AuthModule,
     RoutingModule,
     OccModule,
@@ -24,7 +25,6 @@ import { StorefrontModuleConfig } from './storefront-config';
     CmsModule,
     UiModule,
     UiFrameworkModule,
-    ConfigurableRoutesModule,
     ConfigModule.forRoot()
   ],
   exports: [UiModule],
