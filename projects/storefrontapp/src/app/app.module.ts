@@ -32,10 +32,9 @@ export class ClientRouting {}
     ClientRouting, // spike todo remove it
     StorefrontModule.withConfig({
       server: {
-        baseUrl: environment.occBaseUrl
-      },
-
-      routePaths: {}
+        baseUrl: environment.occBaseUrl,
+        routesConfigUrl: environment.routesConfigUrl // spike todo remove
+      }
     }),
 
     ...devImports
