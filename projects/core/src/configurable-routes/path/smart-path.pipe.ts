@@ -24,7 +24,6 @@ export class SmartPathPipe implements PipeTransform {
     private pathService: PathService // + all facades here
   ) {}
 
-  // always returns an absolute path (with leading /)
   transform([pageName, essentialParameters]: [string, object]): string[] {
     const fullParameters = this.getDataFromFacade(
       pageName,

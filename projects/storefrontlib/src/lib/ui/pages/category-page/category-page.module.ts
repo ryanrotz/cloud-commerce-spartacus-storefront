@@ -10,7 +10,7 @@ import { CategoryPageComponent } from './category-page.component';
 
 const routes: Routes = [
   {
-    path: '__cx-config__search', // todo spike old: 'search/:query',
+    path: '__cx-config__search',
     canActivate: [CmsPageGuards],
     component: CategoryPageComponent,
     data: { pageLabel: 'search' }
@@ -19,36 +19,25 @@ const routes: Routes = [
   // redirect OLD links
   {
     path: 'Open-Catalogue/:categoryTitle/c/:categoryCode',
-    redirectTo: '__cx-config__category' // todo spike old: '/category/:categoryCode/:categoryTitle'
+    redirectTo: '__cx-config__category'
   },
   {
     path: 'Open-Catalogue/:category1/:categoryTitle/c/:categoryCode',
-    redirectTo: '__cx-config__category' // todo spike old:'/category/:categoryCode/:categoryTitle'
+    redirectTo: '__cx-config__category'
   },
   {
     path: 'Open-Catalogue/:category1/:category2/:categoryTitle/c/:categoryCode',
-    redirectTo: '__cx-config__category' // todo spike old:'/category/:categoryCode/:categoryTitle'
+    redirectTo: '__cx-config__category'
   },
   {
     path: 'OpenCatalogue/:category1/:category2/:categoryTitle/c/:categoryCode',
-    redirectTo: '__cx-config__category' // todo spike old:'/category/:categoryCode/:categoryTitle'
+    redirectTo: '__cx-config__category'
   },
   {
-    path: '__cx-config__category', // todo spike old 'category/:categoryCode',
+    path: '__cx-config__category',
     canActivate: [CmsPageGuards],
     component: CategoryPageComponent
   }
-  // spike todo old:
-  // {
-  //   path: 'category/:categoryCode/:title',
-  //   canActivate: [CmsPageGuards],
-  //   component: CategoryPageComponent
-  // },
-  // {
-  //   path: 'Brands/:brandName/c/:brandCode',
-  //   canActivate: [CmsPageGuards],
-  //   component: CategoryPageComponent
-  // }
 ];
 
 @NgModule({

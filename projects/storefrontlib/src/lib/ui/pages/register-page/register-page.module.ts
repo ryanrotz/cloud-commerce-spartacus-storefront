@@ -9,7 +9,7 @@ import { CmsPageGuards } from '../../../cms/guards/cms-page.guard';
 
 const routes: Routes = [
   {
-    path: '__cx-config__register', // todo spike old: 'register',
+    path: '__cx-config__register',
     canActivate: [NotAuthGuard, CmsPageGuards],
     data: { pageLabel: 'login' },
     component: RegisterPageComponent

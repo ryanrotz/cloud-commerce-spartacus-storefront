@@ -9,7 +9,7 @@ import { CartPageComponent } from './cart-page.component';
 
 const routes: Routes = [
   {
-    path: '__cx-config__cart', // todo spike old: 'cart',
+    path: '__cx-config__cart',
     canActivate: [CmsPageGuards],
     data: { pageLabel: 'cartPage' },
     component: CartPageComponent

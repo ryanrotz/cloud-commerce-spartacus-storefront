@@ -11,7 +11,6 @@ import { PathService } from './path.service';
 export class PathPipe implements PipeTransform {
   constructor(private pathService: PathService) {}
 
-  // always returns an absolute path (with leading /)
   transform([pageName, parametersObject]: [string, object]): string[] {
     return this.pathService.transform(pageName, parametersObject);
   }

@@ -8,7 +8,7 @@ import { CmsPageGuards } from '../../../cms/guards/cms-page.guard';
 
 const routes: Routes = [
   {
-    path: '__cx-config__help', // todo spike old: 'help',
+    path: '__cx-config__help',
     canActivate: [CmsPageGuards],
 
     // TODO:

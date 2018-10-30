@@ -10,7 +10,7 @@ import { MultiStepCheckoutPageComponent } from './multi-step-checkout-page.compo
 
 const routes: Routes = [
   {
-    path: '__cx-config__checkout', // todo spike old: 'checkout',
+    path: '__cx-config__checkout',
     canActivate: [AuthGuard, CmsPageGuards, CartNotEmptyGuard],
     data: { pageLabel: 'multiStepCheckoutSummaryPage' },
     component: MultiStepCheckoutPageComponent

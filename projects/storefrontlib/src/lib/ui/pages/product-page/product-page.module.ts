@@ -9,14 +9,14 @@ import { ProductPageComponent } from './product-page.component';
 
 const routes: Routes = [
   {
-    path: '__cx-config__product', // todo spike old: 'product/:productCode',
+    path: '__cx-config__product',
     canActivate: [ProductGuard, CmsPageGuards],
     component: ProductPageComponent
   },
   {
     path:
       'Open-Catalogue/:category1/:category2/:category3/:category4/p/:productCode',
-    redirectTo: '__cx-config__product' // todo spike old: 'product/:productCode',
+    redirectTo: '__cx-config__product'
   }
 ];
 

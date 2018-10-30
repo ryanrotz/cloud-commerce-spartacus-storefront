@@ -9,7 +9,7 @@ import { AuthGuard } from './../../../auth/guards/auth.guard';
 
 const routes: Routes = [
   {
-    path: '__cx-config__myAccount_orderDetails', // todo spike old: 'my-account/orders/:orderCode',
+    path: '__cx-config__myAccount_orderDetails',
     canActivate: [AuthGuard, CmsPageGuards],
     component: OrderDetailsPageComponent,
     data: { pageLabel: 'order' }
