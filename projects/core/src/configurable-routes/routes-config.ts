@@ -8,9 +8,9 @@ export interface RoutesConfig {
 }
 
 export const defaultRoutesConfig: RoutesConfig = {
-  defaultLanguage: 'default',
+  defaultLanguage: 'defaultRoutes',
   translations: {
-    default: {
+    defaultRoutes: {
       homepage: [''],
       cart: ['cart'],
       search: ['search/:query'],
