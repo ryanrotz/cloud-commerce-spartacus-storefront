@@ -3,8 +3,9 @@ import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { ConfigurableRoutesService } from './configurable-routes.service';
 import { ConfigurableRoutesLoader } from './configurable-routes-loader';
 
-function loadRoutesConfig(loader: ConfigurableRoutesLoader) {
-  return () => loader.loadRoutesConfig();
+export function loadRoutesConfig(loader: ConfigurableRoutesLoader) {
+  const result = () => loader.loadRoutesConfig();
+  return result;
 }
 
 @NgModule({
