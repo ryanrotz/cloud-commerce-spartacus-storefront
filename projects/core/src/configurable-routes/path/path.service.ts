@@ -40,16 +40,32 @@ export class PathService implements PipeTransform {
     }
 
     const absolutePath = this.ensureLeadingSlash(path); // TODO: rethink if always return absulte path - for configurable child routes
-    return this.replaceParameters(absolutePath, parametersObject);
+    const parameterNamesMapping = this.configurableRoutesService.getParameterNamesMapping(
+      pageName
+    );
+
+    return this.replaceParameters(
+      absolutePath,
+      parametersObject,
+      parameterNamesMapping
+    );
   }
 
-  private replaceParameters(path: Path, parametersObject: object) {
-    return this.getSegments(path).map(
-      segment =>
-        this.isParameter(segment)
-          ? parametersObject[this.getParameterName(segment)]
-          : segment
-    );
+  private replaceParameters(
+    path: Path,
+    parametersObject: object,
+    parameterNamesMapping: object
+  ) {
+    return this.getSegments(path).map(segment => {
+      if (this.isParameter(segment)) {
+        const parameterName = this.getParameterName(segment);
+        const mappedParameterName =
+          parameterNamesMapping[parameterName] || parameterName;
+
+        return parametersObject[mappedParameterName];
+      }
+      return segment;
+    });
   }
 
   private getFirstPathMatchingAllParameters(

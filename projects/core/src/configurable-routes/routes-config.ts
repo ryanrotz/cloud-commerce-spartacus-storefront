@@ -1,10 +1,23 @@
 import { RoutesTranslations } from './routes-translations';
 
+export interface ParameterNamesMapping {
+  product: {
+    [_: string]: string;
+  };
+  category: {
+    [_: string]: string;
+  };
+  order: {
+    [_: string]: string;
+  };
+}
+
 export interface RoutesConfig {
   defaultLanguage: string;
   translations: {
     [languageCode: string]: RoutesTranslations;
   };
+  parameterNamesMapping: ParameterNamesMapping;
 }
 
 export const defaultRoutesConfig: RoutesConfig = {
@@ -35,6 +48,19 @@ export const defaultRoutesConfig: RoutesConfig = {
       help: ['help'],
       sale: ['sale'],
       pageNotFound: ['**']
+    }
+  },
+  // spike todo:
+  parameterNamesMapping: {
+    product: {
+      code: 'productCode'
+    },
+    category: {
+      code: 'categoryCode'
+      // spike todo maybe add mappings for :Brands, :title and :brandCode
+    },
+    order: {
+      code: 'orderCode'
     }
   }
 };
