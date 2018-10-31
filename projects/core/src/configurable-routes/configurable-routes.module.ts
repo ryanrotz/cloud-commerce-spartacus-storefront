@@ -4,7 +4,7 @@ import { ConfigurableRoutesService } from './configurable-routes.service';
 import { ConfigurableRoutesLoader } from './configurable-routes-loader';
 
 export function loadRoutesConfig(loader: ConfigurableRoutesLoader) {
-  const result = () => loader.loadRoutesConfig();
+  const result = () => loader.loadRoutesConfig(); // this assignment is a workaround for AOT compilation
   return result;
 }
 
