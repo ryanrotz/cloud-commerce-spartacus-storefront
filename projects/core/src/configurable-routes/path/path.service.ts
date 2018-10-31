@@ -23,7 +23,7 @@ export class PathService implements PipeTransform {
 
     const path = this.getFirstPathMatchingAllParameters(
       paths,
-      Object.keys(parametersObject)
+      parametersObject
     );
 
     if (path === undefined) {
@@ -60,7 +60,7 @@ export class PathService implements PipeTransform {
       if (this.isParameter(segment)) {
         const parameterName = this.getParameterName(segment);
         const mappedParameterName =
-          parameterNamesMapping[parameterName] || parameterName;
+          parameterNamesMapping[parameterName] || parameterName; // if parameter isn't in the mapping object, use original parameter name
 
         return parametersObject[mappedParameterName];
       }
@@ -70,11 +70,11 @@ export class PathService implements PipeTransform {
 
   private getFirstPathMatchingAllParameters(
     paths: Path[],
-    givenParameters: Parameter[]
+    parametersObject: object
   ): Path {
     return paths.find(path =>
       this.getParameters(path).every(
-        parameter => givenParameters.indexOf(parameter) !== -1
+        parameterName => parametersObject[parameterName] !== undefined
       )
     );
   }
