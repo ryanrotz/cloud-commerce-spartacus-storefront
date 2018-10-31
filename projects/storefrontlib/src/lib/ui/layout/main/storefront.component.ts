@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ConfigurableRoutesService } from 'projects/core/src/configurable-routes/configurable-routes.service';
+import { ConfigurableRoutesService } from '@spartacus/core';
 
 @Component({
   selector: 'cx-storefront',
