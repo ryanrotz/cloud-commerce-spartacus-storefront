@@ -8,6 +8,7 @@ import { PaginationAndSortingModule } from '../../ui/components/pagination-and-s
 /* component */
 import { OrderHistoryComponent } from './order-history/order-history.component';
 import { OrderDetailsComponent } from './order-details/order-details.component';
+import { PathModule } from '@spartacus/core';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { OrderDetailsComponent } from './order-details/order-details.component';
     FormsModule,
     NgSelectModule,
     BootstrapModule,
-    PaginationAndSortingModule
+    PaginationAndSortingModule,
+    PathModule
   ],
   declarations: [OrderHistoryComponent, OrderDetailsComponent],
   exports: [OrderHistoryComponent, OrderDetailsComponent]

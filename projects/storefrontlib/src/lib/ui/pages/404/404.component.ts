@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { pageNotFoundImgSrc } from '../../images/pageNotFound';
+import { PathService } from '@spartacus/core';
 
 @Component({
   selector: 'y-404',
@@ -7,18 +8,19 @@ import { pageNotFoundImgSrc } from '../../images/pageNotFound';
   styleUrls: ['./404.component.scss']
 })
 export class PageNotFoundComponent {
+  constructor(private pathService: PathService) {}
   pageNotFoundImgSrc = pageNotFoundImgSrc;
   errorNav = [
     {
-      link: '/',
+      link: this.pathService.transform('homepage'),
       label: 'Homepage'
     },
     {
-      link: '/faq',
+      link: this.pathService.transform('help'),
       label: 'Frequently Asked Question'
     },
     {
-      link: '/cart',
+      link: this.pathService.transform('cart'),
       label: 'Cart'
     }
   ];

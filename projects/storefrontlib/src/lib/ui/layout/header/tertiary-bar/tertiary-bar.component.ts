@@ -1,26 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { PathService } from '@spartacus/core';
 
 @Component({
   selector: 'y-tertiary-bar',
   templateUrl: './tertiary-bar.component.html',
   styleUrls: ['./tertiary-bar.component.scss']
 })
-export class TertiaryBarComponent implements OnInit {
+export class TertiaryBarComponent {
+  constructor(private pathService: PathService) {}
+
   tertiaryNavItems: any[] = [
     {
       label: 'Sale',
-      url: '/sale'
+      url: this.pathService.transform('sale')
     },
     {
       label: 'Contact us',
-      url: '/contact'
+      url: this.pathService.transform('contact')
     },
     {
       label: 'Help',
-      url: '/help'
+      url: this.pathService.transform('help')
     }
   ];
-  constructor() {}
-
-  ngOnInit() {}
 }

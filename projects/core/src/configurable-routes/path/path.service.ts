@@ -1,24 +1,28 @@
-import { PipeTransform, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { ServerConfig } from '../../config/server-config/server-config';
 import { ConfigurableRoutesService } from '../configurable-routes.service';
+import { ConfigurableRoutePageName } from '../configurable-route-page-name';
 
 type Segment = string;
 type Path = string;
 type Parameter = string;
 
 @Injectable()
-export class PathService implements PipeTransform {
+export class PathService {
   constructor(
     private configurableRoutesService: ConfigurableRoutesService,
     private config: ServerConfig
   ) {}
 
   // always returns an absolute path (with leading /)
-  transform(pageName: string, parametersObject: object): Segment[] {
+  transform(
+    pageName: ConfigurableRoutePageName,
+    parametersObject: object = {}
+  ): string {
     const paths = this.configurableRoutesService.getPathsForPage(pageName);
 
     if (paths === undefined) {
-      return ['/']; // main route
+      return '/';
     }
     const parameterNamesMapping = this.configurableRoutesService.getParameterNamesMapping(
       pageName
@@ -43,35 +47,37 @@ export class PathService implements PipeTransform {
           parameterNamesMapping
         );
       }
-      return ['/']; // main route
+      return '/';
     }
 
     const absolutePath = this.ensureLeadingSlash(path); // TODO: rethink if always return absulte path - for configurable child routes
 
-    return this.replaceParameters(
+    return this.provideParametersValues(
       absolutePath,
       parametersObject,
       parameterNamesMapping
     );
   }
 
-  private replaceParameters(
+  private provideParametersValues(
     path: Path,
     parametersObject: object,
     parameterNamesMapping: object
-  ) {
-    return this.getSegments(path).map(segment => {
-      if (this.isParameter(segment)) {
-        const parameterName = this.getParameterName(segment);
-        const mappedParameterName = this.getMappedParameterName(
-          parameterName,
-          parameterNamesMapping
-        );
+  ): string {
+    return this.getSegments(path)
+      .map(segment => {
+        if (this.isParameter(segment)) {
+          const parameterName = this.getParameterName(segment);
+          const mappedParameterName = this.getMappedParameterName(
+            parameterName,
+            parameterNamesMapping
+          );
 
-        return parametersObject[mappedParameterName];
-      }
-      return segment;
-    });
+          return parametersObject[mappedParameterName];
+        }
+        return segment;
+      })
+      .join('/');
   }
 
   private getFirstPathMatchingAllParameters(
@@ -117,6 +123,6 @@ export class PathService implements PipeTransform {
     parameterName: string,
     parameterNamesMapping: object
   ): string {
-    return parameterNamesMapping[parameterName] || parameterName; // if parameter isn't in the mapping object, use original parameter name
+    return parameterNamesMapping[parameterName] || parameterName;
   }
 }

@@ -5,7 +5,7 @@
             class="y-carousel__slide">
             <ng-template ngbSlide *ngFor="let group of productGroups">
                 <div class="y-carousel__product-container" *ngFor="let product of group">
-                    <div class="y-carousel__product" [routerLink]="['/product/', product.code]">
+                    <div class="y-carousel__product" [routerLink]="['product', product] | cxPath">
                         <y-picture [imageContainer]="product.images?.PRIMARY" imageFormat="product">
                         </y-picture>
                     </div>

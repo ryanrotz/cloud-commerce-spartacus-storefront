@@ -73,16 +73,7 @@ export class ConfigurableRoutesService {
   }
 
   getParameterNamesMapping(pageName: string): object {
-    const mapping = this.parameterNamesMapping[pageName];
-    if (mapping === undefined) {
-      if (!this.config.production) {
-        console.warn(
-          `No parameter names mapping were configured for page '${pageName}'!`
-        );
-      }
-      return {};
-    }
-    return mapping;
+    return this.parameterNamesMapping[pageName] || {};
   }
 
   // TODO: take care also of nested routes
@@ -135,7 +126,7 @@ export class ConfigurableRoutesService {
     const paths = this.getPathsForPage(pageName);
     const originalPath = route[key];
 
-    return paths === undefined ? [originalPath] : paths; // if there are no configured paths for given page name, return original path
+    return paths === undefined ? [originalPath] : paths;
   }
 
   private getDefaultRoutesTranslations(): RoutesTranslations {
