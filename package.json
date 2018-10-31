@@ -6,7 +6,7 @@
     "node": ">=8.9.0"
   },
   "scripts": {
-    "build": "ng build storefrontapp --prod",
+    "build": "ng build storefrontapp --prod --build-optimizer=false",
     "build:core:lib": "ng build core && ng build storefrontlib",
     "build:qa": "ng build -c=qa",
     "e2e": "ng e2e",
