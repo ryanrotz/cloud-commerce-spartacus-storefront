@@ -1,16 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { CmsPageGuards } from '../../../cms/guards/cms-page.guard';
 import { StoreFinderPageComponent } from './store-finder-page.component';
 import { StoreFinderPageLayoutModule } from '../../layout/store-finder-page-layout/store-finder-page-layout.module';
+import { ConfigurableRoutes } from '@spartacus/core';
 
-const routes: Routes = [
+const routes: ConfigurableRoutes = [
   {
-    path: '__cx-config__storeFinder',
+    path: null,
     canActivate: [CmsPageGuards],
-    data: { pageLabel: 'storefinderPage' },
-    component: StoreFinderPageComponent
+    component: StoreFinderPageComponent,
+    data: {
+      pageLabel: 'storefinderPage',
+      cxConfigurable: { path: 'storeFinder' }
+    }
   }
 ];
 

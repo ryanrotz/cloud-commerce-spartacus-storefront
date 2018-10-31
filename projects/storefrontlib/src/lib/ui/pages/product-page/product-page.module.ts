@@ -1,22 +1,29 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 
 import { ProductGuard } from '../../../product/guards/product.guard';
 import { CmsPageGuards } from '../../../cms/guards/cms-page.guard';
 import { ProductDetailsPageLayoutModule } from '../../layout/product-details-page-layout/product-details-page-layout.module';
 import { ProductPageComponent } from './product-page.component';
+import { ConfigurableRoutes } from '@spartacus/core';
 
-const routes: Routes = [
+const routes: ConfigurableRoutes = [
   {
-    path: '__cx-config__product',
+    path: null,
     canActivate: [ProductGuard, CmsPageGuards],
-    component: ProductPageComponent
+    component: ProductPageComponent,
+    data: {
+      cxConfigurable: { path: 'product' }
+    }
   },
   {
     path:
       'Open-Catalogue/:category1/:category2/:category3/:category4/p/:productCode',
-    redirectTo: '__cx-config__product'
+    redirectTo: null,
+    data: {
+      cxConfigurable: { redirectTo: 'product' }
+    }
   }
 ];
 

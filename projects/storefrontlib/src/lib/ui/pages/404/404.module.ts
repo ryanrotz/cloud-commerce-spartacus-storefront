@@ -1,16 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { CmsPageGuards } from '../../../cms/guards/cms-page.guard';
 
 import { PageNotFoundComponent } from './404.component';
+import { ConfigurableRoutes } from '@spartacus/core';
 
-const routes: Routes = [
+const routes: ConfigurableRoutes = [
   {
-    path: '__cx-config__pageNotFound',
+    path: null,
     component: PageNotFoundComponent,
     canActivate: [CmsPageGuards],
-    data: { pageLabel: 'notFound' }
+    data: {
+      pageLabel: 'notFound',
+      cxConfigurable: { path: 'pageNotFound' }
+    }
   }
 ];
 

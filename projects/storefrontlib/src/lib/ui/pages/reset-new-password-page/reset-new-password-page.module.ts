@@ -1,16 +1,20 @@
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { CmsPageGuards } from './../../../cms/guards/cms-page.guard';
 import { NotAuthGuard } from './../../../auth/guards/not-auth.guard';
 import { NgModule } from '@angular/core';
 import { ResetNewPasswordLayoutModule } from './../../layout/reset-new-password-layout/reset-new-password-layout.module';
 import { ResetNewPasswordComponent } from './reset-new-password-page.component';
+import { ConfigurableRoutes } from '@spartacus/core';
 
-const routes: Routes = [
+const routes: ConfigurableRoutes = [
   {
-    path: '__cx-config__resetNewPassword',
+    path: null,
     canActivate: [NotAuthGuard, CmsPageGuards],
-    data: { pageLabel: 'homepage' },
-    component: ResetNewPasswordComponent
+    component: ResetNewPasswordComponent,
+    data: {
+      pageLabel: 'homepage',
+      cxConfigurable: { path: 'resetNewPassword' }
+    }
   }
 ];
 @NgModule({
