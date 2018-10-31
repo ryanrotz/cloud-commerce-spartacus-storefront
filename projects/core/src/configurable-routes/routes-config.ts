@@ -53,14 +53,14 @@ export const defaultRoutesConfig: RoutesConfig = {
   // spike todo:
   parameterNamesMapping: {
     product: {
-      code: 'productCode'
+      productCode: 'code'
     },
     category: {
-      code: 'categoryCode'
+      categoryCode: 'code'
       // spike todo maybe add mappings for :Brands, :title and :brandCode
     },
     order: {
-      code: 'orderCode'
+      orderCode: 'code'
     }
   }
 };

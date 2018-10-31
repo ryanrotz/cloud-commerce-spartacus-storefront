@@ -135,7 +135,7 @@ export class ConfigurableRoutesService {
     const paths = this.getPathsForPage(pageName);
     const originalPath = route[key];
 
-    return paths || [originalPath];
+    return paths === undefined ? [originalPath] : paths; // if there are no configured paths for given page name, return original path
   }
 
   private getDefaultRoutesTranslations(): RoutesTranslations {

@@ -20,29 +20,33 @@ export class PathService implements PipeTransform {
     if (paths === undefined) {
       return ['/']; // main route
     }
+    const parameterNamesMapping = this.configurableRoutesService.getParameterNamesMapping(
+      pageName
+    );
 
     const path = this.getFirstPathMatchingAllParameters(
       paths,
-      parametersObject
+      parametersObject,
+      parameterNamesMapping
     );
 
     if (path === undefined) {
       if (!this.config.production) {
         // TODO check if it does print nicely
         console.warn(
-          `No configured path matches all its parameters to given parameters object. Configured paths: `,
+          `No configured path matches all its parameters to parameters object when given parameter names mapping. `,
+          `Configured paths: `,
           path,
           `. Parameters object: `,
-          parametersObject
+          parametersObject,
+          `. Parameter names mapping: `,
+          parameterNamesMapping
         );
       }
       return ['/']; // main route
     }
 
     const absolutePath = this.ensureLeadingSlash(path); // TODO: rethink if always return absulte path - for configurable child routes
-    const parameterNamesMapping = this.configurableRoutesService.getParameterNamesMapping(
-      pageName
-    );
 
     return this.replaceParameters(
       absolutePath,
@@ -59,8 +63,10 @@ export class PathService implements PipeTransform {
     return this.getSegments(path).map(segment => {
       if (this.isParameter(segment)) {
         const parameterName = this.getParameterName(segment);
-        const mappedParameterName =
-          parameterNamesMapping[parameterName] || parameterName; // if parameter isn't in the mapping object, use original parameter name
+        const mappedParameterName = this.getMappedParameterName(
+          parameterName,
+          parameterNamesMapping
+        );
 
         return parametersObject[mappedParameterName];
       }
@@ -70,12 +76,18 @@ export class PathService implements PipeTransform {
 
   private getFirstPathMatchingAllParameters(
     paths: Path[],
-    parametersObject: object
+    parametersObject: object,
+    parameterNamesMapping: object
   ): Path {
     return paths.find(path =>
-      this.getParameters(path).every(
-        parameterName => parametersObject[parameterName] !== undefined
-      )
+      this.getParameters(path).every(parameterName => {
+        const mappedParameterName = this.getMappedParameterName(
+          parameterName,
+          parameterNamesMapping
+        );
+
+        return parametersObject[mappedParameterName] !== undefined;
+      })
     );
   }
 
@@ -99,5 +111,12 @@ export class PathService implements PipeTransform {
 
   private ensureLeadingSlash(path: Path): Path {
     return (path = path.startsWith('/') ? path : '/' + path);
+  }
+
+  private getMappedParameterName(
+    parameterName: string,
+    parameterNamesMapping: object
+  ): string {
+    return parameterNamesMapping[parameterName] || parameterName; // if parameter isn't in the mapping object, use original parameter name
   }
 }

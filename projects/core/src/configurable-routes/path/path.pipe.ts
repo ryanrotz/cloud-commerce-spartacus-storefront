@@ -11,7 +11,7 @@ import { PathService } from './path.service';
 export class PathPipe implements PipeTransform {
   constructor(private pathService: PathService) {}
 
-  transform([pageName, parametersObject]: [string, object]): string[] {
+  transform([pageName, parametersObject = {}]: [string, object]): string[] {
     return this.pathService.transform(pageName, parametersObject);
   }
 }
