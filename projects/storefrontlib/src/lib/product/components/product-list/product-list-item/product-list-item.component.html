@@ -2,7 +2,7 @@
   <div class="col-12 col-md-4">
     <a [routerLink]="['product', {productCode: product.code}] | cxPath" class="y-product-search-list__image__container">
       <y-picture class="y-product-search-list__image" [imageContainer]="product.images?.PRIMARY" imageFormat="product"
-        [routerLink]="['product', {productCode: product.code}] | cxPath" [imageAlt]="product.summary"></y-picture>
+        [imageAlt]="product.summary"></y-picture>
     </a>
   </div>
   <div class="col-12 col-md-8">
