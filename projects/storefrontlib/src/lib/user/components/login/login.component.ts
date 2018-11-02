@@ -15,6 +15,7 @@ import { UserToken } from '../../../auth/models/token-types.model';
 import * as fromStore from '../../store';
 import { AuthService } from '../../../auth/facade/auth.service';
 import { RoutingService } from '../../../routing/facade/routing.service';
+import { PathService } from '@spartacus/core';
 
 @Component({
   selector: 'y-login',
@@ -33,6 +34,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     private routing: RoutingService,
     private store: Store<fromStore.UserState>,
     private route: ActivatedRoute,
+    private pathService: PathService,
     private elementRef: ElementRef,
     private renderer: Renderer2
   ) {
@@ -80,7 +82,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         child => child.GUARD_NAME === 'AuthGuard'
       )
     ) {
-      this.routing.go(['/login']);
+      this.routing.go([this.pathService.transform('login')]);
     }
   }
 
