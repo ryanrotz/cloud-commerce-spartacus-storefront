@@ -7,7 +7,7 @@ export interface ParameterNamesMapping {
   category: {
     [_: string]: string;
   };
-  order: {
+  myAccount_orderDetails: {
     [_: string]: string;
   };
 }
@@ -59,7 +59,7 @@ export const defaultRoutesConfig: RoutesConfig = {
       categoryCode: 'code'
       // spike todo maybe add mappings for :Brands, :title and :brandCode
     },
-    order: {
+    myAccount_orderDetails: {
       orderCode: 'code'
     }
   }
