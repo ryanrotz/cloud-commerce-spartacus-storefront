@@ -1,30 +1,25 @@
 import { Injectable } from '@angular/core';
-import { ServerConfig } from '../../config/server-config/server-config';
 import {
   getSegments,
   isParameter,
   getParameterName,
   removeLeadingSlash
 } from '../path-utils';
-import { defaultRoutesTranslations } from '../routes-config';
 import { PathService } from './path.service';
+import { ConfigurableRoutesLoader } from '../configurable-routes-loader';
+import { RoutesTranslations } from '../routes-translations';
 
 @Injectable()
 export class DynamicPathService {
-  constructor(private pathService: PathService, private config: ServerConfig) {}
+  constructor(
+    private pathService: PathService,
+    private configurableRoutesLoader: ConfigurableRoutesLoader
+  ) {}
 
   transform(url: string) {
     const { pageName, parameters } = this.recognizeRoute(url);
 
     if (!pageName) {
-      // spike todo: check if this console.warn is enough descriptive
-      if (!this.config.production) {
-        console.warn(
-          `No configured default route path is matching with the url '${url}'. `,
-          'Default routes configuration: ',
-          defaultRoutesTranslations
-        );
-      }
       return url;
     }
     return this.pathService.transform(pageName, parameters);
@@ -78,14 +73,14 @@ export class DynamicPathService {
     urlSegments: string[],
     pageName: string
   ): string {
-    const paths = defaultRoutesTranslations[pageName];
+    const paths = this.defaultRoutesTranslations[pageName];
     return paths.find(path => urlSegments.length === getSegments(path).length);
   }
 
   private getPageNameWithLongestMatchingSegmentsPrefix(urlSegments: string[]) {
-    return Object.keys(defaultRoutesTranslations)
+    return Object.keys(this.defaultRoutesTranslations)
       .map(pageName => {
-        const paths = defaultRoutesTranslations[pageName];
+        const paths = this.defaultRoutesTranslations[pageName];
         const commonPrefixLengths = paths.map(path => {
           const pathSegments = getSegments(path);
           return this.getCommonPrefix(urlSegments, pathSegments).length;
@@ -118,5 +113,9 @@ export class DynamicPathService {
       }
     }
     return commonPrefix;
+  }
+
+  private get defaultRoutesTranslations(): RoutesTranslations {
+    return this.configurableRoutesLoader.routesConfig.translations.default;
   }
 }

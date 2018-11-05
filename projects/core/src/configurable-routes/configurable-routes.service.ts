@@ -2,12 +2,7 @@ import { Injectable } from '@angular/core';
 import { Routes, Router, Route } from '@angular/router';
 import { ServerConfig } from '../config/server-config/server-config';
 import { ConfigurableRoutesLoader } from './configurable-routes-loader';
-import {
-  defaultRoutesConfig,
-  ParameterNamesMapping,
-  defaultRoutesTranslations,
-  defaultParameterNamesMapping
-} from './routes-config';
+import { RoutesConfig } from './routes-config';
 import { RoutesTranslations } from './routes-translations';
 
 type ConfigurableRouteKey = 'path' | 'redirectTo';
@@ -20,31 +15,23 @@ export class ConfigurableRoutesService {
     private readonly loader: ConfigurableRoutesLoader
   ) {}
 
-  private routesTranslations: RoutesTranslations;
-  private currentRoutesTranslations: RoutesTranslations;
-  private parameterNamesMapping: ParameterNamesMapping;
+  private routesConfig: RoutesConfig;
   private currentLanguageCode: string;
 
-  initRoutes() {
-    const {
-      translations,
-      defaultLanguage,
-      parameterNamesMapping
-    } = this.loader.routesConfig;
+  private get currentRoutesTranslations(): RoutesTranslations {
+    return this.routesConfig.translations[this.currentLanguageCode];
+  }
 
-    this.currentLanguageCode = defaultLanguage; // spike TODO init it with language from facade (ngrx)
-    this.routesTranslations = translations;
-    this.parameterNamesMapping = Object.assign(
-      {},
-      defaultParameterNamesMapping,
-      parameterNamesMapping
-    );
+  initRoutes() {
+    this.routesConfig = this.loader.routesConfig;
+
+    this.currentLanguageCode = 'de'; // spike TODO init it with language from facade (ngrx)
 
     this.changeLanguage(this.currentLanguageCode);
   }
 
   changeLanguage(languageCode: string) {
-    if (this.routesTranslations[languageCode] === undefined) {
+    if (this.routesConfig.translations[languageCode] === undefined) {
       if (!this.config.production) {
         // spike todo check if it really checks it:
         console.warn(
@@ -55,12 +42,6 @@ export class ConfigurableRoutesService {
     }
 
     this.currentLanguageCode = languageCode;
-    const newTranslations = this.routesTranslations[languageCode];
-    this.currentRoutesTranslations = Object.assign(
-      {},
-      defaultRoutesTranslations,
-      newTranslations
-    );
 
     this.router.resetConfig(this.translateRoutes(this.router.config));
   }
@@ -78,7 +59,7 @@ export class ConfigurableRoutesService {
   }
 
   getParameterNamesMapping(pageName: string): object {
-    return this.parameterNamesMapping[pageName] || {};
+    return this.routesConfig.parameterNamesMapping[pageName] || {};
   }
 
   // TODO: take care also of nested routes

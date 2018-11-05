@@ -2,6 +2,11 @@ import { CommonModule } from '@angular/common';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { ConfigurableRoutesService } from './configurable-routes.service';
 import { ConfigurableRoutesLoader } from './configurable-routes-loader';
+import { ConfigModule, Config } from '../config/config.module';
+import {
+  ConfigurableRoutesModuleConfig,
+  defaultConfigurableRoutesModuleConfig
+} from './configurable-routes-module.config';
 
 export function loadRoutesConfig(loader: ConfigurableRoutesLoader) {
   const result = () => loader.loadRoutesConfig(); // this assignment is a workaround for AOT compilation
@@ -9,7 +14,10 @@ export function loadRoutesConfig(loader: ConfigurableRoutesLoader) {
 }
 
 @NgModule({
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    ConfigModule.withConfig(defaultConfigurableRoutesModuleConfig)
+  ],
   declarations: [],
   exports: [],
   providers: [
@@ -20,7 +28,8 @@ export function loadRoutesConfig(loader: ConfigurableRoutesLoader) {
       useFactory: loadRoutesConfig,
       deps: [ConfigurableRoutesLoader],
       multi: true
-    }
+    },
+    { provide: ConfigurableRoutesModuleConfig, useExisting: Config }
   ]
 })
 export class ConfigurableRoutesModule {}
