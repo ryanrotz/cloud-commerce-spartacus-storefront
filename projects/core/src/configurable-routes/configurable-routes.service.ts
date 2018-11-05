@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { Routes, Router, Route } from '@angular/router';
 import { ServerConfig } from '../config/server-config/server-config';
 import { ConfigurableRoutesLoader } from './configurable-routes-loader';
-import { RoutesConfig } from './routes-config';
-import { RoutesTranslations } from './routes-translations';
+import { RoutesConfig, RoutesTranslations } from './routes-config';
 
 type ConfigurableRouteKey = 'path' | 'redirectTo';
 

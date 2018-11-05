@@ -7,7 +7,7 @@ import {
 } from '../path-utils';
 import { PathService } from './path.service';
 import { ConfigurableRoutesLoader } from '../configurable-routes-loader';
-import { RoutesTranslations } from '../routes-translations';
+import { RoutesTranslations } from '../routes-config';
 
 @Injectable()
 export class DynamicPathService {
