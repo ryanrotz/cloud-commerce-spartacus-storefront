@@ -45,7 +45,7 @@ export const defaultRoutesConfig: RoutesConfig = {
       myAccount_orderDetails: ['my-account/orders/:orderCode'],
 
       contact: ['contact'],
-      help: ['help'],
+      help: ['faq'],
       sale: ['sale'],
       pageNotFound: ['**']
     }
