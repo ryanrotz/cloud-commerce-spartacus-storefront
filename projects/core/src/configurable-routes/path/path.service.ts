@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { ServerConfig } from '../../config/server-config/server-config';
 import { ConfigurableRoutesService } from '../configurable-routes.service';
-import { ConfigurableRoutePageName } from '../configurable-route-page-name';
-
-type Segment = string;
-type Path = string;
-type Parameter = string;
+import {
+  getSegments,
+  isParameter,
+  getParameterName,
+  ensureLeadingSlash
+} from '../path-utils';
 
 @Injectable()
 export class PathService {
@@ -15,10 +16,7 @@ export class PathService {
   ) {}
 
   // always returns an absolute path (with leading /)
-  transform(
-    pageName: ConfigurableRoutePageName,
-    parametersObject: object = {}
-  ): string {
+  transform(pageName: string, parametersObject: object = {}): string {
     const paths = this.configurableRoutesService.getPathsForPage(pageName);
 
     if (paths === undefined) {
@@ -50,7 +48,7 @@ export class PathService {
       return '/';
     }
 
-    const absolutePath = this.ensureLeadingSlash(path); // TODO: rethink if always return absulte path - for configurable child routes
+    const absolutePath = ensureLeadingSlash(path); // TODO: rethink if always return absulte path - for configurable child routes
 
     return this.provideParametersValues(
       absolutePath,
@@ -60,14 +58,14 @@ export class PathService {
   }
 
   private provideParametersValues(
-    path: Path,
+    path: string,
     parametersObject: object,
     parameterNamesMapping: object
   ): string {
-    return this.getSegments(path)
+    return getSegments(path)
       .map(segment => {
-        if (this.isParameter(segment)) {
-          const parameterName = this.getParameterName(segment);
+        if (isParameter(segment)) {
+          const parameterName = getParameterName(segment);
           const mappedParameterName = this.getMappedParameterName(
             parameterName,
             parameterNamesMapping
@@ -81,10 +79,10 @@ export class PathService {
   }
 
   private getFirstPathMatchingAllParameters(
-    paths: Path[],
+    paths: string[],
     parametersObject: object,
     parameterNamesMapping: object
-  ): Path {
+  ): string {
     return paths.find(path =>
       this.getParameters(path).every(parameterName => {
         const mappedParameterName = this.getMappedParameterName(
@@ -97,26 +95,10 @@ export class PathService {
     );
   }
 
-  private getParameters(path: Path) {
-    return this.getSegments(path)
-      .filter(this.isParameter)
-      .map(this.getParameterName);
-  }
-
-  private getSegments(path: Path): Segment[] {
-    return path.split('/');
-  }
-
-  private isParameter(segment: Segment): boolean {
-    return segment.startsWith(':');
-  }
-
-  private getParameterName(segment: Segment): Parameter {
-    return segment.slice(1); // it just removes leading ':'
-  }
-
-  private ensureLeadingSlash(path: Path): Path {
-    return (path = path.startsWith('/') ? path : '/' + path);
+  private getParameters(path: string) {
+    return getSegments(path)
+      .filter(isParameter)
+      .map(getParameterName);
   }
 
   private getMappedParameterName(

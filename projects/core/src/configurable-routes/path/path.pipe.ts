@@ -1,6 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { PathService } from './path.service';
-import { ConfigurableRoutePageName } from '../configurable-route-page-name';
 
 @Pipe({
   name: 'cxPath',
@@ -12,10 +11,7 @@ import { ConfigurableRoutePageName } from '../configurable-route-page-name';
 export class PathPipe implements PipeTransform {
   constructor(private pathService: PathService) {}
 
-  transform([pageName, parametersObject = {}]: [
-    ConfigurableRoutePageName,
-    object
-  ]): string {
+  transform([pageName, parametersObject = {}]: [string, object]): string {
     return this.pathService.transform(pageName, parametersObject);
   }
 }

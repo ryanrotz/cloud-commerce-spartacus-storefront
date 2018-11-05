@@ -1,10 +1,9 @@
 import { Route } from '@angular/router';
-import { ConfigurableRoutePageName } from './configurable-route-page-name';
 
 export interface ConfigurableRoutePath extends Route {
   data: {
     cxConfigurable: {
-      path?: ConfigurableRoutePageName;
+      path?: string;
     };
     [_: string]: any;
   };
@@ -13,7 +12,7 @@ export interface ConfigurableRoutePath extends Route {
 export interface ConfigurableRouteRedirectTo extends Route {
   data: {
     cxConfigurable: {
-      redirectTo?: ConfigurableRoutePageName;
+      redirectTo?: string;
     };
     [_: string]: any;
   };
