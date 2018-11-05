@@ -25,23 +25,23 @@ export interface RoutesTranslations {
 }
 
 export interface ParameterNamesMapping {
-  product: {
+  product?: {
     [_: string]: string;
   };
-  category: {
+  category?: {
     [_: string]: string;
   };
-  myAccount_orderDetails: {
+  myAccount_orderDetails?: {
     [_: string]: string;
   };
 }
 
 export interface RoutesConfig {
-  translations: {
-    default: RoutesTranslations;
+  translations?: {
+    default?: RoutesTranslations;
     [languageCode: string]: RoutesTranslations;
   };
-  parameterNamesMapping: ParameterNamesMapping;
+  parameterNamesMapping?: ParameterNamesMapping;
 }
 
 export const defaultRoutesConfig: RoutesConfig = {
