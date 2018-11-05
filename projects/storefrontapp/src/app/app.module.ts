@@ -42,7 +42,7 @@ export class ClientRouting {}
       routesConfig: {
         translations: {
           default: {
-            storeFinder: ['our-stores']
+            // storeFinder: ['our-stores'] // changing it causes cxDynamicPath not working for '/store-finder' link from CMS
           },
           de: {
             storeFinder: ['unsere-laden']
