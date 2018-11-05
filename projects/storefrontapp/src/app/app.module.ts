@@ -38,6 +38,16 @@ export class ClientRouting {}
       server: {
         baseUrl: environment.occBaseUrl,
         routesConfigUrl: environment.routesConfigUrl // spike todo remove
+      },
+      routesConfig: {
+        translations: {
+          default: {
+            storeFinder: ['our-stores']
+          },
+          de: {
+            storeFinder: ['unsere-laden']
+          }
+        }
       }
     }),
 
