@@ -2,7 +2,12 @@ import { Injectable } from '@angular/core';
 import { Routes, Router, Route } from '@angular/router';
 import { ServerConfig } from '../config/server-config/server-config';
 import { ConfigurableRoutesLoader } from './configurable-routes-loader';
-import { defaultRoutesConfig, ParameterNamesMapping } from './routes-config';
+import {
+  defaultRoutesConfig,
+  ParameterNamesMapping,
+  defaultRoutesTranslations,
+  defaultParameterNamesMapping
+} from './routes-config';
 import { RoutesTranslations } from './routes-translations';
 
 type ConfigurableRouteKey = 'path' | 'redirectTo';
@@ -31,7 +36,7 @@ export class ConfigurableRoutesService {
     this.routesTranslations = translations;
     this.parameterNamesMapping = Object.assign(
       {},
-      this.getDefaultParameterNamesMapping(),
+      defaultParameterNamesMapping,
       parameterNamesMapping
     );
 
@@ -53,7 +58,7 @@ export class ConfigurableRoutesService {
     const newTranslations = this.routesTranslations[languageCode];
     this.currentRoutesTranslations = Object.assign(
       {},
-      this.getDefaultRoutesTranslations(),
+      defaultRoutesTranslations,
       newTranslations
     );
 
@@ -127,15 +132,5 @@ export class ConfigurableRoutesService {
     const originalPath = route[key];
 
     return paths === undefined ? [originalPath] : paths;
-  }
-
-  private getDefaultRoutesTranslations(): RoutesTranslations {
-    return defaultRoutesConfig.translations[
-      defaultRoutesConfig.defaultLanguage
-    ];
-  }
-
-  private getDefaultParameterNamesMapping(): ParameterNamesMapping {
-    return defaultRoutesConfig.parameterNamesMapping;
   }
 }
