@@ -22,6 +22,8 @@ export interface RoutesTranslations {
   sale?: string[];
 
   pageNotFound?: string[];
+
+  [pageName: string]: string[];
 }
 
 export interface ParameterNamesMapping {
