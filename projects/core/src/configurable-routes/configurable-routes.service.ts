@@ -8,6 +8,10 @@ type ConfigurableRouteKey = 'path' | 'redirectTo';
 
 @Injectable()
 export class ConfigurableRoutesService {
+  readonly DEFAULT_LANGUAGE_CODE = 'default';
+  readonly UNCONFIGURED_PATH_PLACEHOLDER =
+    '__cx-unconfigured-path-placeholder__';
+
   constructor(
     private readonly config: ServerConfig,
     private readonly router: Router,
@@ -24,7 +28,7 @@ export class ConfigurableRoutesService {
   initRoutes() {
     this.routesConfig = this.loader.routesConfig;
 
-    this.currentLanguageCode = 'de'; // spike TODO init it with language from facade (ngrx)
+    this.currentLanguageCode = this.DEFAULT_LANGUAGE_CODE; // spike TODO init it with language from facade (ngrx)
 
     this.changeLanguage(this.currentLanguageCode);
   }
@@ -34,13 +38,15 @@ export class ConfigurableRoutesService {
       if (!this.config.production) {
         // spike todo check if it really checks it:
         console.warn(
-          `There are no translations in routes config for language code '${languageCode}'.`
+          `There are no translations in routes config for language code '${languageCode}'.`,
+          `The default routes translations will be used instead: `,
+          this.routesConfig.translations.default
         );
       }
-      return;
+      this.currentLanguageCode = this.DEFAULT_LANGUAGE_CODE;
+    } else {
+      this.currentLanguageCode = languageCode;
     }
-
-    this.currentLanguageCode = languageCode;
 
     this.router.resetConfig(this.translateRoutes(this.router.config));
   }
@@ -109,8 +115,7 @@ export class ConfigurableRoutesService {
   ): string[] {
     const pageName = this.getConfigurable(route, key);
     const paths = this.getPathsForPage(pageName);
-    const originalPath = route[key];
 
-    return paths === undefined ? [originalPath] : paths;
+    return paths === undefined ? [this.UNCONFIGURED_PATH_PLACEHOLDER] : paths;
   }
 }
